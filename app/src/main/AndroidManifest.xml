@@ -8,8 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RollerIo">
-        <activity android:name=".MainActivity">
+        android:screenOrientation="portrait"
+        android:theme="@style/MainBarStyle">
+        <activity android:name=".RegistrationActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
