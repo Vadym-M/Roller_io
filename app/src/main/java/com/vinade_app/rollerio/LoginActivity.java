@@ -1,5 +1,6 @@
 package com.vinade_app.rollerio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,10 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     Button signUp, login;
     EditText email, password;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,12 @@ public class LoginActivity extends AppCompatActivity {
             String pass = intent.getString("password");
             initFields(mail,pass);
         }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogInMethod(email.getText().toString(), password.getText().toString());
+            }
+        });
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.fieldPassword);
         signUp = findViewById(R.id.btn_signup);
         login = findViewById(R.id.btn_login);
+        mAuth = mAuth.getInstance();
     }
 
     private void initFields(String mail, String pass)
@@ -52,5 +68,26 @@ public class LoginActivity extends AppCompatActivity {
             email.setText(mail);
             password.setText(pass);
         }
+    }
+    private void LogInMethod(String mail , String pass)
+    {
+        mAuth.signInWithEmailAndPassword(mail, pass)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                           Intent intent = new Intent(LoginActivity.this, NavigationBarActivity.class);
+                           startActivity(intent);
+                           finish();
+
+                        } else {
+                            Toast.makeText(LoginActivity.this,"Error",Toast.LENGTH_SHORT).show();
+
+                            // ...
+                        }
+
+                        // ...
+                    }
+                });
     }
 }
