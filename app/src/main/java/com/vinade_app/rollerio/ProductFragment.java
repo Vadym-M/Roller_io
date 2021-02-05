@@ -3,12 +3,17 @@ package com.vinade_app.rollerio;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,7 +28,7 @@ import java.util.ArrayList;
  * Use the {@link ProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductFragment extends Fragment implements SectionAdapter.OnSectionListener {
+public class ProductFragment extends Fragment implements SectionAdapter.OnSectionListener, ProductsAdapter.OnProductsListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +76,7 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
+        Toolbar toolbar = view.findViewById(R.id.topAppBar);
         sectionLoader();
         recyclerInit(view);
         productAdapterInit(view);
@@ -96,7 +102,9 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
     }
     private void productAdapterInit(View view)
     {
-        GridView gridView = view.findViewById(R.id.gridView);
+        RecyclerView gridView = view.findViewById(R.id.gridView);
+        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridView.setLayoutManager(gridLayoutManager);
         ArrayList<Product> products = new ArrayList<>();
         products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
         products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
@@ -110,7 +118,8 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
         products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
         products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
         products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),products);
+
+        ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),products, this);
         gridView.setAdapter(productsAdapter);
 
         /*// implement setOnItemClickListener event on GridView
@@ -132,4 +141,6 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
     public void onClick(int position) {
         Toast.makeText(getContext(),"EBAAAAAAAAAAT + " + position, Toast.LENGTH_LONG).show();
     }
+
+
 }

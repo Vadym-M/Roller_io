@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
 
         android:supportsRtl="true"
-        android:theme="@style/Theme.RollerIo">
-        android:screenOrientation="portrait"
-        android:supportsRtl="true"
         android:theme="@style/MainBarStyle">
-        <activity android:name=".NavigationBarActivity"></activity>
+        <activity android:name=".NavigationBarActivity">
+
+        </activity>
         <activity
             android:name=".RegistrationActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" />

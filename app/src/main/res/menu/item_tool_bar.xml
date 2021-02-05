@@ -6,6 +6,5 @@
         android:icon="@drawable/search"
         android:iconTint="@color/white"
         android:title="Search"
-        android:contentDescription="Products"
         app:showAsAction="ifRoom" />
 </menu>
