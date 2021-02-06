@@ -3,23 +3,23 @@
     <item
     android:id="@+id/itemHome"
     android:title="Home"
-        android:iconTint="@color/mainColor"
+        android:iconTint="@color/mainColorDark"
         android:icon="@drawable/home"/>
     <item
     android:id="@+id/itemFavorite"
     android:title="Favorite"
-        android:iconTint="@color/mainColor"
+        android:iconTint="@color/mainColorDark"
         android:icon="@drawable/favorite"
         />
     <item
     android:id="@+id/itemCart"
     android:title="Cart"
-        android:iconTint="@color/mainColor"
+        android:iconTint="@color/mainColorDark"
         android:icon="@drawable/cart"
         />
     <item
     android:id="@+id/itemProfile"
     android:title="Profile"
-        android:iconTint="@color/mainColor"
+        android:iconTint="@color/mainColorDark"
         android:icon="@drawable/profil"/>
 </menu>

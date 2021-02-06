@@ -16,8 +16,8 @@
             android:id="@+id/productImg"
             android:layout_width="match_parent"
             android:layout_height="194dp"
-            app:srcCompat="@drawable/seba"
             android:scaleType="centerCrop"
+            app:srcCompat="@android:drawable/stat_sys_download"
 
             />
 

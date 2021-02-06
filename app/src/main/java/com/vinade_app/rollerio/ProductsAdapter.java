@@ -1,6 +1,8 @@
 package com.vinade_app.rollerio;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +38,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     }
 
+
     @NonNull
     @Override
     public ViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,7 +50,19 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder2 holder, int position) {
 
-        holder.imageView.setImageResource(Integer.parseInt(products.get(position).getImg()));
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://roller-io-ff7bb.appspot.com/");
+        StorageReference storageRef = storage.getReference();
+        storageRef.child(products.get(position).getImg()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d("debug", "URI : " + uri.toString());
+                Picasso.get().load(uri.toString()).into(holder.imageView);
+                //holder.imageView.setImageResource(Integer.parseInt(products.get(position).getImg()));
+            }
+        });
+
+         products.get(position);
+
         holder.textView.setText(products.get(position).getNameProduct());
         holder.textView2.setText(products.get(position).getPrice());
     }

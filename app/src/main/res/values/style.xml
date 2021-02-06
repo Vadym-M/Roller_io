@@ -4,4 +4,7 @@
         <item name="colorPrimaryDark">@color/mainColor</item>
         <item name="colorPrimary">@color/mainColor</item>
     </style>
+    <style name="sadasd" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/background_for_search</item>
+    </style>
 </resources>
