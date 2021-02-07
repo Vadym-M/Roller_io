@@ -12,12 +12,6 @@
         android:icon="@drawable/favorite"
         />
     <item
-    android:id="@+id/itemCart"
-    android:title="Cart"
-        android:iconTint="@color/mainColorDark"
-        android:icon="@drawable/cart"
-        />
-    <item
     android:id="@+id/itemProfile"
     android:title="Profile"
         android:iconTint="@color/mainColorDark"

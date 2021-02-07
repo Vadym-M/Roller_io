@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +40,12 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     public void onBindViewHolder(@NonNull SectionAdapter.ViewHolder holder, int position) {
         Section section = sections.get(position);
         holder.imageButton.setImageResource(Integer.parseInt(section.getImg()));
-
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"it working + "+ sections.get(position) ,Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 

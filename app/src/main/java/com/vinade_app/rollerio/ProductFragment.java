@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SearchView;
@@ -204,6 +205,7 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
         ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),products, this);
         gridView.setAdapter(productsAdapter);
 
+
         /*// implement setOnItemClickListener event on GridView
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -223,6 +225,8 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
     public void onClick(int position) {
         Toast.makeText(getContext(),"EBAAAAAAAAAAT + " + position, Toast.LENGTH_LONG).show();
     }
+
+
 
 
 }

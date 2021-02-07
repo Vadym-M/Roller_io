@@ -22,9 +22,7 @@ private BottomNavigationView bottomNavigationView;
                 Fragment fragment = null;
                 switch(item.getItemId())
                 {
-                    case R.id.itemCart:
-                        fragment = new CartFragment();
-                        break;
+
                     case R.id.itemFavorite:
                         fragment = new FavoriteFragment();
                         break;

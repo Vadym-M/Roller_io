@@ -43,6 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         app:liftOnScroll="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed|snapMargins">
 
@@ -95,18 +97,36 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gridView"
-        android:horizontalSpacing="15dp"
-        android:verticalSpacing="15dp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="50dp"
-        android:stretchMode="columnWidth"
-        android:background="@color/backgroundHint"
+
+
         >
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="-2dp"
+            android:src="@drawable/download_img"
+            app:tint="@color/downloadColor" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundHint"
+            android:columnWidth="50dp"
+            android:horizontalSpacing="15dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="15dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
 
 

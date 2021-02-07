@@ -1,18 +1,22 @@
 package com.vinade_app.rollerio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -59,12 +63,26 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 Picasso.get().load(uri.toString()).into(holder.imageView);
                 //holder.imageView.setImageResource(Integer.parseInt(products.get(position).getImg()));
             }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context,"Error loading image...",Toast.LENGTH_SHORT).show();
+            }
         });
 
          products.get(position);
 
         holder.textView.setText(products.get(position).getNameProduct());
         holder.textView2.setText(products.get(position).getPrice());
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductPageActivity.class);
+                intent.putExtra("id",products.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
 
@@ -79,10 +97,13 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     public class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView textView, textView2;
-        Button button, button2;
+        Button button;
+        ImageButton button2;
         OnProductsListener onProductsListener;
+        View view;
         public ViewHolder2(@NonNull View itemView, OnProductsListener onProductsListener) {
             super(itemView);
+            view = itemView;
             imageView =itemView.findViewById(R.id.productImg);
             textView = itemView.findViewById(R.id.productName);
             textView2 = itemView.findViewById(R.id.productPrice);
@@ -93,11 +114,13 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         }
 
         @Override
-        public void onClick(View v) { onProductsListener.onClick(getAdapterPosition());
+        public void onClick(View v) {
+            onProductsListener.onClick(getAdapterPosition());
         }
     }
     public interface OnProductsListener
     {
         void onClick(int position);
+
     }
 }
