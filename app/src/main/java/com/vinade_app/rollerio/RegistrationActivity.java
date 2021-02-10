@@ -8,12 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,8 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText name, surname, email, mobile_phone, password;
     ProgressDialog loadingBar;
     Button reg;
+    FirebaseUser user;
+    String nameUser, surnameUser, phoneUser, passUser, emailUser;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +91,17 @@ public class RegistrationActivity extends AppCompatActivity {
                 loadingBar.setMessage("Please wait...");
                 loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
-                validateUser(name.getText().toString(),surname.getText().toString(),email.getText().toString(), mobile_phone.getText().toString(), password.getText().toString());
+                nameUser = name.getText().toString();
+                surnameUser = surname.getText().toString();
+                emailUser = email.getText().toString();
+                phoneUser = mobile_phone.getText().toString();
+                passUser = password.getText().toString();
+                Auth(emailUser, passUser);
             }
     }
-    private void validateUser(String name, String surname, String email, String phone, String password)
+    private void validateUser(String name, String surname, String email, String phone, String password, String id)
     {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference refDB= database.getReference("Users");
         refDB.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -110,11 +120,18 @@ public class RegistrationActivity extends AppCompatActivity {
                         userData.put("email", email);
                         userData.put("mobile_number", phone);
                         userData.put("password", password);
+                        userData.put("favorites", "0");
 
-                        refDB.child(phone).updateChildren(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        refDB.child(user.getUid()).updateChildren(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Auth(email, password);
+                                loadingBar.dismiss();
+                                Toast.makeText(RegistrationActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                intent.putExtra("email", email);
+                                intent.putExtra("password", password);
+                                startActivity(intent);
+                                finish();
                             }
                         });
                     }
@@ -131,14 +148,15 @@ public class RegistrationActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                FirebaseUser user = mAuth.getCurrentUser();
-                loadingBar.dismiss();
-                Toast.makeText(RegistrationActivity.this, "Account created", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                intent.putExtra("email", email);
-                intent.putExtra("password", password);
-                startActivity(intent);
-                finish();
+                if (task.isSuccessful()) {
+                    user = mAuth.getCurrentUser();
+                    assert user != null;
+                    validateUser(nameUser,surnameUser,emailUser, phoneUser, passUser, user.getUid());
+                } else {
+
+                    loadingBar.dismiss();
+                    Toast.makeText(RegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

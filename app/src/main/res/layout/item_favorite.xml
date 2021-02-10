@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/test"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/productImgFavorite"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@android:drawable/stat_sys_download" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/productNameFavorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/productPriceFavorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/productDetailsFavorite"
+                    android:layout_gravity="left"
+                    android:layout_width="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="Details" />
+
+                <ImageButton
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/favorite_active"
+                    android:backgroundTint="@color/mainColor" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".FavoriteFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        >
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="50dp"
+            android:padding="20dp"
+            android:text="Favorites" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundHint"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</LinearLayout>

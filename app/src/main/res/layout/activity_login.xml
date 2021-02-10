@@ -20,71 +20,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <com.google.android.material.textfield.TextInputLayout
 
-            app:endIconMode="clear_text"
-            app:boxStrokeColor="@color/mainColor"
-            android:textColorHint="@color/hint"
-            app:hintTextColor="@color/mainColorDark"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:gravity="center"
             android:hint="Email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:textColorHint="@color/hint"
+            app:boxStrokeColor="@color/mainColor"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/mainColorDark">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fieldEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textCursorDrawable="@drawable/cursor_style"/>
+                android:textCursorDrawable="@drawable/cursor_style" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
 
-            app:endIconMode="password_toggle"
-            app:boxStrokeColor="@color/mainColor"
-            android:textColorHint="@color/hint"
-            app:hintTextColor="@color/mainColorDark"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:gravity="center"
             android:hint="Password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:textColorHint="@color/hint"
+            app:boxStrokeColor="@color/mainColor"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="@color/mainColorDark">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fieldPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textCursorDrawable="@drawable/cursor_style"
-                />
+                android:textCursorDrawable="@drawable/cursor_style" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox"
-            android:buttonTint="@color/mainColor"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/mainColor"
             android:text="Remember Me" />
 
         <Button
             android:id="@+id/btn_login"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="LOGIN"
             android:textColor="@color/mainColorDark"
-            app:strokeColor="@color/mainColor"
             app:rippleColor="@color/mainColor"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            app:strokeColor="@color/mainColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,30 +93,29 @@
             android:orientation="horizontal">
 
             <TextView
-                android:gravity="right"
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:text="Don't have account?" />
 
             <Button
-                android:gravity="left"
                 android:id="@+id/btn_signup"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="left"
                 android:text="Sign up"
                 android:textAllCaps="false"
                 android:textColor="@color/mainColor"
-                app:rippleColor="@color/white"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                app:rippleColor="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                 />
+                android:layout_weight="0.5" />
         </LinearLayout>
 
     </LinearLayout>

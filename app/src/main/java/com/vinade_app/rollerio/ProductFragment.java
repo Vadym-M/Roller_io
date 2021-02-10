@@ -2,6 +2,7 @@ package com.vinade_app.rollerio;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +44,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.internal.cache.DiskLruCache;
 
@@ -49,8 +55,15 @@ import okhttp3.internal.cache.DiskLruCache;
  * Use the {@link ProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductFragment extends Fragment implements SectionAdapter.OnSectionListener, ProductsAdapter.OnProductsListener {
-
+public class ProductFragment extends Fragment implements SectionAdapter.OnSectionListener{
+    private final String FAVORITES = "favorites";
+    private final String USERS = "Users";
+    private final String PRODUCTS = "Products";
+    private final String TOOL_BAR_TITLE = "What are you looking for?";
+    private final String KEY_ID_PRODUCT = "id";
+    private final String KEY_FAVORITES = "favorite";
+    private final String REF_STORAGE = "gs://roller-io-ff7bb.appspot.com/";
+    private String CURRENT_USER;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +72,9 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
     ArrayList<Product> products = new ArrayList<>();
     Toolbar toolbar;
     RecyclerView gridView;
+    AnimationDrawable animationDrawable;
+    ImageView anim, backgroundForAnim;
+    private View view;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     // TODO: Rename and change types of parameters
@@ -102,128 +118,112 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
-        toolbar = view.findViewById(R.id.topAppBar);
-        toolbar.inflateMenu(R.menu.item_tool_bar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show();
-            }
-        });
-        toolbar.setTitle("What are you looking for?");
+        this.view = view;
+        animationStart();
+        toolBarInit();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference refDB= database.getReference("Products");
-        //refDB.child("01").setValue(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO", "01"));
-        refDB.addValueEventListener(new ValueEventListener() {
+        DatabaseReference refDB= database.getReference();
+        FirebaseAuth refUser = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = refUser.getCurrentUser();
+
+        refDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("debug", "MSG");
+                ArrayList<String> favorites = new ArrayList<>();
                 if(products.size() > 0)
                     products.clear();
-                for(DataSnapshot s: snapshot.getChildren())
+
+                for(DataSnapshot s: snapshot.child(PRODUCTS).getChildren())
                 {
                     Product p = s.getValue(Product.class);
                     assert p !=null;
                     products.add(p);
-
-                    Log.d("debug", "MSG" + s.getValue(Product.class).getId());
-
-
-
                 }
-                productAdapterInit(view);
 
+                for(DataSnapshot s: snapshot.child(USERS).getChildren()){
+                    if(s.getKey().equals(currentUser.getUid()))
+                    {
+                        HashMap<String, String> fav;
+                        fav = s.getValue(User.class).getFavorites();
+                        for(Map.Entry<String, String> data: fav.entrySet())
+                        { favorites.add(data.getKey()); }
+                    }
+                }
+                productAdapterInit(favorites);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-       /* FirebaseStorage storage = FirebaseStorage.getInstance("gs://roller-io-ff7bb.appspot.com/");
-        StorageReference storageRef = storage.getReference();
-        storageRef.child("rollerblade02.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.d("debug", "URI : " + uri.toString());
-            }
-        });
-
-        */
-
-
 
         sectionLoader();
-        recyclerInit(view);
+        recyclerInit();
+
         return view;
     }
 
     private void sectionLoader()
     {
-
         sections.add( new Section(String.valueOf(R.drawable.seba), "Seba"));
         sections.add( new Section(String.valueOf(R.drawable.rollerblade), "Rollerblade"));
         sections.add( new Section(String.valueOf(R.drawable.fila), "Fila"));
         sections.add( new Section(String.valueOf(R.drawable.ktwo), "K2"));
         sections.add( new Section(String.valueOf(R.drawable.powerslide), "Powerslide"));
     }
-    private void recyclerInit(View view)
+    private void recyclerInit()
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclreView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         SectionAdapter sectionAdapter = new SectionAdapter(getContext(), sections, this);
         recyclerView.setAdapter(sectionAdapter);
     }
-    private void productAdapterInit(View view)
+    private void productAdapterInit(ArrayList<String> favorites)
     {
-
-
-
         gridView = view.findViewById(R.id.gridView);
-        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         gridView.setLayoutManager(gridLayoutManager);
 
-        /*products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-        products.add(new Product("Seba K2X65","2500zl", String.valueOf(R.drawable.example), "Seba", "INFO"));
-
-         */
-
-        ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),products, this);
+        ProductsAdapter productsAdapter = new ProductsAdapter(view.getContext(),products,favorites);
         gridView.setAdapter(productsAdapter);
 
+        animationStop();
 
-        /*// implement setOnItemClickListener event on GridView
-        simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    }
+    private void animationStart()
+    {
+        anim = view.findViewById(R.id.animationProduct);
+        backgroundForAnim = view.findViewById(R.id.backgroundWhite);
+        anim.setBackgroundResource(R.drawable.loading_animation);
+        animationDrawable = (AnimationDrawable) anim.getBackground();
+        animationDrawable.start();
+    }
+    private void animationStop()
+    {
+        backgroundForAnim.setVisibility(View.INVISIBLE);
+        anim.setVisibility(View.INVISIBLE);
+        animationDrawable.stop();
+    }
+
+    private void toolBarInit()
+    {
+        toolbar = view.findViewById(R.id.topAppBar);
+        toolbar.inflateMenu(R.menu.item_tool_bar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // set an Intent to Another Activity
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                intent.putExtra("image", logos[position]); // put image data in Intent
-                startActivity(intent); // start Intent
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show();
             }
         });
-
-         */
+        toolbar.setTitle(TOOL_BAR_TITLE);
     }
 
 
     @Override
     public void onClick(int position) {
-        Toast.makeText(getContext(),"EBAAAAAAAAAAT + " + position, Toast.LENGTH_LONG).show();
+
     }
 
 

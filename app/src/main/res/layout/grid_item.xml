@@ -61,18 +61,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Details"
-                style="?attr/borderlessButtonStyle"
+
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 />
 
             <ImageButton
                 android:id="@+id/productFavorite"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/mainColor"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/favorite" />
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/favorite"
+                android:backgroundTint="@color/mainColor" />
         </RelativeLayout>
 
     </LinearLayout>

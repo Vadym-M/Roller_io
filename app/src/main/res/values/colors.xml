@@ -11,4 +11,8 @@
     <color name="mainColor">#C8B481</color>
     <color name="downloadColor">#E6D4A4</color>
     <color name="mainColorDark">#8E7C4C</color>
+    <color name="greenColor">#808000</color>
+    <color name="testColor">#D2B48C</color>
+    <color name="testColor2">#B49953</color>
+
 </resources>

@@ -1,17 +1,30 @@
 package com.vinade_app.rollerio;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class User {
     private String name, surname, email, mobile_number, password;
+    private HashMap<String, String> favorites = new HashMap<>();
 
     public User() {
     }
 
-    public User(String name, String surname, String email, String mobile_number, String password) {
+    public User(String name, String surname, String email, String mobile_number, String password, HashMap<String, String> favorites) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.mobile_number = mobile_number;
         this.password = password;
+        this.favorites = favorites;
+    }
+
+    public HashMap<String, String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(HashMap<String, String> favorites) {
+        this.favorites = favorites;
     }
 
     public String getName() {

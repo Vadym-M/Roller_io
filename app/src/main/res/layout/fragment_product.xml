@@ -22,10 +22,14 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:titleTextColor="@color/mainColorDark" />
+            android:background="@color/mainColor"
+            app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -92,49 +96,70 @@
 
 
 </com.google.android.material.appbar.AppBarLayout>
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    >
-    <RelativeLayout
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-        >
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="120dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="-2dp"
-            android:src="@drawable/download_img"
-            app:tint="@color/downloadColor" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/gridView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundHint"
-            android:columnWidth="50dp"
-            android:horizontalSpacing="15dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="15dp">
+            android:layout_height="wrap_content"
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
-</androidx.core.widget.NestedScrollView>
+
+            >
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginEnd="130dp"
+                android:layout_marginBottom="-2dp"
+                android:src="@drawable/download_img"
+                app:tint="@color/downloadColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundHint"
+                android:columnWidth="50dp"
+                android:horizontalSpacing="15dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="15dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+        <ImageView
+            android:id="@+id/backgroundWhite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <ImageView
+            android:id="@+id/animationProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
     <LinearLayout
+        android:layout_weight="0"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+
+    </LinearLayout>
 
 </LinearLayout>
