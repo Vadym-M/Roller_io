@@ -36,6 +36,8 @@ import java.util.Map;
 public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterFavorite.ViewHolderFavorite> {
     private final String FAVORITES = "favorites";
     private final String USERS = "Users";
+    private final String PRODUCTS = "Products";
+
     private final String KEY_ID_PRODUCT = "id";
     private String CURRENT_USER;
 
@@ -45,7 +47,7 @@ public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterF
     private FirebaseStorage firebaseStorage;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-    int pos = 0;
+
     Context context;
     private ArrayList<Product> products;
     private final LayoutInflater inflater;
@@ -67,8 +69,10 @@ public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterF
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderFavorite holder, int position) {
+
         loaderImg(position, holder);
-        updateData();
+
+
 
 
         holder.favoriteBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +85,7 @@ public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterF
             @Override
             public void onClick(View v)
             {
-                pos = position;
+               // pos = position;
                 Intent intent = new Intent(context, ProductPageActivity.class);
                 intent.putExtra(KEY_ID_PRODUCT, products.get(position).getId());
                 context.startActivity(intent);
@@ -90,6 +94,7 @@ public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterF
 
         holder.productName.setText(products.get(position).getNameProduct());
         holder.productPrice.setText(products.get(position).getPrice());
+
     }
 
     private void removeProduct(int pos)
@@ -104,57 +109,11 @@ public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterF
 
     }
 
-    private void updateData()
-    {
-        databaseReference.child(USERS).child(CURRENT_USER).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> updateFavorite = new ArrayList<>();
-                Product pr = null;
-                HashMap<String, String> fav;
-                fav = snapshot.getValue(User.class).getFavorites();
-                for (Map.Entry<String, String> data : fav.entrySet()) {
-                    updateFavorite.add(data.getKey());
-                }
-                if(updateFavorite.size() != products.size()){
-                    for(Product p: products)
-                    {
-                        for(int i = 0; i<products.size(); i++){
-                        if(!p.getId().equals(products.get(i).getId()))
-                         {
-                            pr = p;
-                         }
-                        }
-                    }
-                if(pr!=null)
-                {
-                    products.remove(pos);
-                    notifyItemRemoved(pos);
-                    notifyItemRangeChanged(pos, products.size());
-                }
-            }}
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void loaderImg(int position, ViewHolderFavorite holder)
     {
-        storageReference.child(products.get(position).getImg()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri.toString()).into(holder.productImgFavorite);
-            }
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Error loading image...", Toast.LENGTH_SHORT).show();
-            }
-        });
+                Picasso.get().load(products.get(position).getUrl()).fit().into(holder.productImgFavorite);
     }
 
     @Override

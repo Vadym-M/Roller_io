@@ -24,6 +24,14 @@
                 android:backgroundTint="@color/mainColor" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 <com.google.android.material.card.MaterialCardView
     android:id="@+id/card"
     android:layout_width="match_parent"
@@ -31,10 +39,7 @@
     android:layout_margin="8dp">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,6 +152,35 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+
 </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="See also"
+                android:textSize="20dp"
+                android:padding="10dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recommendationsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundHint"
+            android:columnWidth="50dp"
+            android:horizontalSpacing="15dp"
+            android:stretchMode="spacingWidth"
+            android:verticalSpacing="15dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+</ScrollView>
+
 </LinearLayout>

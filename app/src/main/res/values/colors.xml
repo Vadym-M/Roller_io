@@ -8,11 +8,22 @@
     <color name="hint">#3C3C3C</color>
     <color name="backgroundHint">#EDEDED</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="mainColor">#C8B481</color>
+    <color name="mainColor">#249681</color>
+    <color name="textColor">#B2BFB6</color>
+    <color name="mainColor2">#A2BFBD</color>
     <color name="downloadColor">#E6D4A4</color>
     <color name="mainColorDark">#8E7C4C</color>
     <color name="greenColor">#808000</color>
     <color name="testColor">#D2B48C</color>
     <color name="testColor2">#B49953</color>
+
+
+
+    <color name="itemColorRecoleta">#F1F3F6</color>
+    <color name="textColorRecoleta">#333333</color>
+    <color name="btnColorRecoleta">#FBD77B</color>
+    <color name="priceColorRecoleta">#249681</color>
+
+
 
 </resources>

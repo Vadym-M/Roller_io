@@ -36,6 +36,8 @@ public class FavoriteFragment extends Fragment {
     private final String PRODUCTS = "Products";
     private String CURRENT_USER;
 
+    private View view;
+    private DatabaseReference refDB;
     ArrayList<Product> products = new ArrayList<>();
     ArrayList<String> favorites = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
@@ -85,10 +87,21 @@ public class FavoriteFragment extends Fragment {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference refDB= database.getReference();
-
+        this.refDB = refDB;
+        this.view = view;
+        updateDatabase();
         FirebaseAuth refUser = FirebaseAuth.getInstance();
         FirebaseUser currentUser = refUser.getCurrentUser();
         CURRENT_USER = currentUser.getUid();
+
+
+
+
+        return view;
+    }
+
+    private void updateDatabase()
+    {
         refDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -117,7 +130,7 @@ public class FavoriteFragment extends Fragment {
                     for(int i = 0; i< favorites.size(); i ++)
                     {
 
-                       // Log.d("debug", "Favorites for = "+ favorites.get(i));
+                        // Log.d("debug", "Favorites for = "+ favorites.get(i));
                         if(p.getId().equals(favorites.get(i)))
                         {
 
@@ -136,11 +149,8 @@ public class FavoriteFragment extends Fragment {
 
             }
         });
-
-
-
-        return view;
     }
+
     private void productAdapterInit(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerFavorite);
@@ -150,5 +160,11 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setAdapter(productsAdapter);
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDatabase();
     }
 }

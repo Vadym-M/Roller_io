@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context=".ProductFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -22,7 +23,7 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/mainColor"
+            android:background="@color/priceColorRecoleta"
             app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,8 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         app:liftOnScroll="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed|snapMargins">
 
@@ -56,15 +55,17 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="8dp"
             android:text="Сategories"
-            android:textSize="20dp"
-            android:textColor="@color/mainColorDark"/>
+            android:textSize="25dp"
+
+            android:textColor="@color/textColorRecoleta"/>
 
         <View
             android:id="@+id/divider2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
             android:background="?android:attr/listDivider" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -79,16 +80,20 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="10dp"
             android:background="?android:attr/listDivider" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:paddingTop="10dp"
+
+            android:padding="8dp"
             android:text="Best sellers"
-            android:textSize="20dp"
-            android:textColor="@color/mainColorDark"
+            android:textSize="25dp"
+            android:background="@color/itemColorRecoleta"
+            android:textColor="@color/textColorRecoleta"
 
             />
 
@@ -107,25 +112,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-
             >
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="130dp"
-                android:layout_marginTop="120dp"
-                android:layout_marginEnd="130dp"
-                android:layout_marginBottom="-2dp"
-                android:src="@drawable/download_img"
-                app:tint="@color/downloadColor" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/backgroundHint"
+                android:background="@color/itemColorRecoleta"
                 android:columnWidth="50dp"
                 android:horizontalSpacing="15dp"
                 android:stretchMode="columnWidth"

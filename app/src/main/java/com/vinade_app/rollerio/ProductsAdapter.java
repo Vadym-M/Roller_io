@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,9 +30,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +49,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     private final String REF_STORAGE = "gs://roller-io-ff7bb.appspot.com/";
     private String CURRENT_USER;
 
+    private boolean isRecommendations = false;
     private FirebaseAuth mAuth;
     private final LayoutInflater inflater;
     ArrayList<Product> products;
@@ -53,7 +59,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     private DatabaseReference databaseReference;
     Context context;
 
-    public ProductsAdapter(Context context, ArrayList<Product> products, ArrayList<String> favorites) {
+    public ProductsAdapter(Context context, ArrayList<Product> products, ArrayList<String> favorites , boolean isRecommendations) {
+        this.isRecommendations = isRecommendations;
         this.inflater = LayoutInflater.from(context);
         this.products = products;
         this.context = context;
@@ -66,27 +73,25 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @Override
     public ViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.grid_item, parent, false);
-
         return new ViewHolder2(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder2 holder, int position) {
 
-        FirebaseStorage storage = FirebaseStorage.getInstance(REF_STORAGE);
-        StorageReference storageRef = storage.getReference();
-        storageRef.child(products.get(position).getImg()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri.toString()).into(holder.imageView);
-            }
+        Picasso.get().load(products.get(position).getUrl()).into(holder.imageView);
 
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Error loading image...", Toast.LENGTH_SHORT).show();
-            }
-        });
+    if(holder.cardView != null) {
+    holder.cardView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, ProductPageActivity.class);
+            intent.putExtra(KEY_ID_PRODUCT, products.get(position).getId());
+            intent.putStringArrayListExtra(KEY_FAVORITES, favorites);
+            context.startActivity(intent);
+        }
+    });
+    }
         for (String s : favorites) {
             if (s.equals(products.get(position).getId())) {
                 holder.button2.setBackgroundResource(R.drawable.favorite_active);
@@ -191,9 +196,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         Button button;
         ImageButton button2;
         View view;
+        CardView cardView;
+        RelativeLayout relativeLayout;
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
+
             view = itemView;
             imageView = itemView.findViewById(R.id.productImg);
             textView = itemView.findViewById(R.id.productName);
@@ -201,10 +209,25 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             button = itemView.findViewById(R.id.productDetails);
             button2 = itemView.findViewById(R.id.productFavorite);
             mAuth = FirebaseAuth.getInstance();
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLay);
             currentUser = mAuth.getCurrentUser();
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference();
             CURRENT_USER = currentUser.getUid();
+
+            if(isRecommendations)
+            {
+                Collections.shuffle(products);
+                cardView = itemView.findViewById(R.id.card);
+                imageView.getLayoutParams().height= 250;
+                cardView.getLayoutParams().height = 500;
+                cardView.getLayoutParams().width = 500;
+                textView.setTextSize(10);
+                textView2.setTextSize(10);
+                button.setVisibility(View.GONE);
+                button2.setVisibility(View.GONE);
+                relativeLayout.setVisibility(View.GONE);
+            }
         }
 
     }

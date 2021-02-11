@@ -3,6 +3,9 @@ package com.vinade_app.rollerio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -31,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,11 +51,13 @@ public class ProductPageActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView details, productName, price;
     private ImageButton btnBack, favorite;
-    boolean change = false;
+    private boolean change = false;
+    private boolean load = true;
     private DatabaseReference refDB;
     private FirebaseUser currentUser;
 
     private ArrayList<String> favorites = new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
     private Product product;
     private String idProduct;
 
@@ -83,10 +90,42 @@ public class ProductPageActivity extends AppCompatActivity {
             }
         });
 
-        refDB.addListenerForSingleValueEvent(new ValueEventListener() {
+        refDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                ArrayList<String> updateFavorite = new ArrayList<>();
+
+                HashMap<String, String> fav;
+                fav = snapshot.child(USERS).child(CURRENT_USER).getValue(User.class).getFavorites();
+                for (Map.Entry<String, String> data : fav.entrySet()) {
+                    updateFavorite.add(data.getKey());
+                }
+
+                favorites = updateFavorite;
+                for(String s: favorites)
+                {
+                    if(s.equals(idProduct))
+                    {
+                        favorite.setBackgroundResource(R.drawable.favorite_active);
+                        break;
+                    }
+                    else
+                        {
+                            favorite.setBackgroundResource(R.drawable.favorite);
+                        }
+                }
+                if(load){
+
+                if(products.size() > 0)
+                    products.clear();
+
+                for(DataSnapshot s: snapshot.child(PRODUCTS).getChildren())
+                {
+                    Product p = s.getValue(Product.class);
+                    assert p !=null;
+                    products.add(p);
+                }
                 for(DataSnapshot d: snapshot.child(PRODUCTS).getChildren())
                 {
                     if(d.getValue(Product.class).getId().equals(idProduct))
@@ -116,8 +155,9 @@ public class ProductPageActivity extends AppCompatActivity {
 
                     }
                 }
-
-
+                    recommendationsInit();
+                    load = false;
+            }
             }
 
             @Override
@@ -131,7 +171,6 @@ public class ProductPageActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
     private void initFirebaseDatabase()
     {
@@ -173,6 +212,15 @@ public class ProductPageActivity extends AppCompatActivity {
             change = true;
         }
 
+    }
+    private void recommendationsInit()
+    {
+        RecyclerView recyclerView = findViewById(R.id.recommendationsRecycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductPageActivity.this);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        ProductsAdapter productsAdapter = new ProductsAdapter(ProductPageActivity.this, products, favorites , true);
+        recyclerView.setAdapter(productsAdapter);
     }
 
 }

@@ -1,18 +1,27 @@
 package com.vinade_app.rollerio;
 
 public class Product {
-    private String nameProduct, price, img, company, details, id;
+    private String nameProduct, price, img, company, details, id, url;
 
     public Product() {
     }
 
-    public Product(String nameProduct, String price, String img, String company, String details, String id) {
+    public Product(String nameProduct, String price, String img, String company, String details, String id, String url) {
         this.nameProduct = nameProduct;
         this.price = price;
         this.img = img;
         this.company = company;
         this.details = details;
         this.id = id;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getNameProduct() {

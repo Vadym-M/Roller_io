@@ -44,9 +44,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import okhttp3.internal.cache.DiskLruCache;
 
@@ -186,7 +188,7 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         gridView.setLayoutManager(gridLayoutManager);
 
-        ProductsAdapter productsAdapter = new ProductsAdapter(view.getContext(),products,favorites);
+    ProductsAdapter productsAdapter = new ProductsAdapter(view.getContext(),products,favorites , false);
         gridView.setAdapter(productsAdapter);
 
         animationStop();
