@@ -85,6 +85,7 @@ public class ProductAdapterFavorite extends RecyclerView.Adapter<ProductAdapterF
             @Override
             public void onClick(View v)
             {
+
                // pos = position;
                 Intent intent = new Intent(context, ProductPageActivity.class);
                 intent.putExtra(KEY_ID_PRODUCT, products.get(position).getId());

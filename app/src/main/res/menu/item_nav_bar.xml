@@ -15,5 +15,5 @@
     android:id="@+id/itemProfile"
     android:title="Profile"
         android:iconTint="@color/mainColorDark"
-        android:icon="@drawable/profil"/>
+        android:icon="@drawable/profile"/>
 </menu>

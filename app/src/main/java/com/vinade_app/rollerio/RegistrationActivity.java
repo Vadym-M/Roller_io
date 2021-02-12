@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import es.dmoral.toasty.Toasty;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     EditText name, surname, email, mobile_phone, password;
@@ -67,23 +69,23 @@ public class RegistrationActivity extends AppCompatActivity {
     {
         if(TextUtils.isEmpty(name.getText().toString()))
         {
-            Toast.makeText(this, "Please enter your Name", Toast.LENGTH_SHORT).show();
+            Toasty.normal(this,"Please enter your Name").show();
         }
         else if(TextUtils.isEmpty(surname.getText().toString()))
         {
-            Toast.makeText(this, "Please enter your Surname", Toast.LENGTH_SHORT).show();
+            Toasty.normal(this,"Please enter your Surname").show();
         }
         else if(TextUtils.isEmpty(email.getText().toString()))
         {
-            Toast.makeText(this, "Please enter your Email", Toast.LENGTH_SHORT).show();
+            Toasty.normal(this,"Please enter your Email").show();
         }
         else if(TextUtils.isEmpty(mobile_phone.getText().toString()))
         {
-            Toast.makeText(this, "Please enter your Mobile Phone", Toast.LENGTH_SHORT).show();
+            Toasty.normal(this,"Please enter your Mobile Phone").show();
         }
         else if(TextUtils.isEmpty(password.getText().toString()))
         {
-            Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
+            Toasty.normal(this,"Please enter your Password").show();
         }
         else
             {
@@ -110,7 +112,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if(snapshot.child(phone).exists())
                 {
                     loadingBar.dismiss();
-                    Toast.makeText(RegistrationActivity.this, "Account with this Email already exists", Toast.LENGTH_SHORT).show();
+                    Toasty.normal(RegistrationActivity.this,"Account with this Email already exists").show();
                 }
                 else
                     {
@@ -126,7 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 loadingBar.dismiss();
-                                Toast.makeText(RegistrationActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+                                Toasty.normal(RegistrationActivity.this,"Account created").show();
                                 Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                 intent.putExtra("email", email);
                                 intent.putExtra("password", password);
@@ -155,7 +157,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 } else {
 
                     loadingBar.dismiss();
-                    Toast.makeText(RegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Toasty.normal(RegistrationActivity.this,"Authentication failed.").show();
+
                 }
             }
         });

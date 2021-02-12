@@ -17,4 +17,14 @@
         android:scaleType="fitCenter"
         android:padding="0px"
         android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/sectionName"
+        android:textColor="@color/textColorRecoleta"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </LinearLayout>

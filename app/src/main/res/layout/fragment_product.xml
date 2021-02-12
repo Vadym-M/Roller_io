@@ -68,13 +68,13 @@
             android:layout_marginBottom="10dp"
             android:background="?android:attr/listDivider" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.factor.bouncy.BouncyRecyclerView
             android:id="@+id/recyclreView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </com.factor.bouncy.BouncyRecyclerView>
 
         <View
             android:id="@+id/divider"
@@ -82,20 +82,54 @@
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="?android:attr/listDivider" />
-
-        <TextView
-            android:id="@+id/textView3"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-
-            android:padding="8dp"
-            android:text="Best sellers"
-            android:textSize="25dp"
             android:background="@color/itemColorRecoleta"
-            android:textColor="@color/textColorRecoleta"
+            android:orientation="horizontal">
 
-            />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/itemColorRecoleta"
+                android:padding="8dp"
+                android:paddingTop="10dp"
+                android:text="Best sellers"
+                android:textColor="@color/textColorRecoleta"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="112dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="Sort by"
+                android:textColor="@color/textColorRecoleta"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinnerSort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@color/itemColorRecoleta"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView10"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -106,14 +140,16 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/itemColorRecoleta"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/itemColorRecoleta"
 
             >
-            <androidx.recyclerview.widget.RecyclerView
+            <com.factor.bouncy.BouncyRecyclerView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -123,7 +159,7 @@
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="15dp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </com.factor.bouncy.BouncyRecyclerView>
 
 
         </RelativeLayout>

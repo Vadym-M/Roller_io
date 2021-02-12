@@ -2,6 +2,13 @@
 <resources>
     <style name="MainBarStyle" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/mainColor</item>
+        <item name="fontFamily">@font/funny_sports</item>
+        <item name="colorControlNormal">@color/white</item>
+
+        <item name="android:editTextColor">@color/itemColorRecoleta</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+
         <item name="colorPrimary">@color/mainColor</item>
     </style>
     <style name="sadasd" parent="Widget.AppCompat.SearchView">

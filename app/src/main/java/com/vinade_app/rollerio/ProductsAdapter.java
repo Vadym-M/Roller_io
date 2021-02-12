@@ -9,18 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,17 +28,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.like.LikeButton;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder2> {
+import es.dmoral.toasty.Toasty;
+
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder2> implements Filterable {
 
     private final String FAVORITES = "favorites";
     private final String USERS = "Users";
@@ -53,6 +55,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     private FirebaseAuth mAuth;
     private final LayoutInflater inflater;
     ArrayList<Product> products;
+    ArrayList<Product> filterProducts;
     ArrayList<String> favorites;
     FirebaseUser currentUser;
     private FirebaseDatabase firebaseDatabase;
@@ -65,6 +68,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         this.products = products;
         this.context = context;
         this.favorites = favorites;
+        filterProducts = new ArrayList<>(products);
 
     }
 
@@ -78,7 +82,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder2 holder, int position) {
-
         Picasso.get().load(products.get(position).getUrl()).into(holder.imageView);
 
     if(holder.cardView != null) {
@@ -133,7 +136,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 }
 
                 favorites = updateFavorite;
-                checkFavorite(holder, position);
+
+                    checkFavorite(holder, position);
+
             }
 
             @Override
@@ -158,19 +163,21 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         if (isFav) {
             holder.button2.setBackgroundResource(R.drawable.favorite);
             databaseReference.child(USERS).child(CURRENT_USER).child(FAVORITES).child(idFav).removeValue();
-            Toast.makeText(context, "Removed from favorites!", Toast.LENGTH_SHORT).show();
+            Toasty.normal(context,"Removed from favorites!", context.getResources().getDrawable(R.drawable.favorite_for_toast, null)).show();
 
         } else {
             holder.button2.setBackgroundResource(R.drawable.favorite_active);
             databaseReference.child(USERS).child(CURRENT_USER).child(FAVORITES).child(products.get(position).getId()).setValue(products.get(position).getNameProduct());
-            Toast.makeText(context, "Added to favorites!", Toast.LENGTH_SHORT).show();
+            Toasty.normal(context,"Added to favorites!", context.getResources().getDrawable(R.drawable.favorite_active_for_toast, null)).show();
         }
-        UpdateFavorite(position, holder);
+        //UpdateFavorite(position, holder);
 
     }
 
     private void checkFavorite(ViewHolder2 holder, int position) {
+
         boolean isFav = false;
+        if(products.size()>position){
         for (String s : favorites) {
             if (s.equals(products.get(position).getId())) {
                 isFav = true;
@@ -181,13 +188,50 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         } else {
             holder.button2.setBackgroundResource(R.drawable.favorite);
         }
-    }
+    }}
 
 
     @Override
     public int getItemCount() {
         return products.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Product> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length()==0)
+            {
+                filteredList.addAll(filterProducts);
+            }else
+                {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for(Product p: filterProducts)
+                    {
+                        if(p.getNameProduct().toLowerCase().contains(filterPattern))
+                        {
+                            filteredList.add(p);
+                        }
+                    }
+                }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            products.clear();
+            products.addAll((Collection<? extends Product>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
@@ -198,6 +242,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         View view;
         CardView cardView;
         RelativeLayout relativeLayout;
+
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);

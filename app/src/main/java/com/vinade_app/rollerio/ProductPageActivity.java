@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class ProductPageActivity extends AppCompatActivity {
     private String FAVORITES = "favorites";
@@ -79,12 +82,13 @@ public class ProductPageActivity extends AppCompatActivity {
                 {
                     favorite.setBackgroundResource(R.drawable.favorite);
                     refDB.child(USERS).child(CURRENT_USER).child(FAVORITES).child(idProduct).removeValue();
-                    Toast.makeText(ProductPageActivity.this, "Removed from favorites!", Toast.LENGTH_SHORT).show();
+                   Toasty.normal(ProductPageActivity.this,"Removed from favorites!", getResources().getDrawable(R.drawable.favorite_for_toast, null)).show();
+
 
                 }else{
                     favorite.setBackgroundResource(R.drawable.favorite_active);
                     refDB.child(USERS).child(CURRENT_USER).child(FAVORITES).child(product.getId()).setValue(product.getNameProduct());
-                    Toast.makeText(ProductPageActivity.this, "Added to favorites!", Toast.LENGTH_SHORT).show();
+                    Toasty.normal(ProductPageActivity.this,"Added to favorites!", getResources().getDrawable(R.drawable.favorite_active_for_toast, null)).show();
                 }
                 change = !change;
             }

@@ -18,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
     Button signUp, login;
     EditText email, password;
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                            finish();
 
                         } else {
-                            Toast.makeText(LoginActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                            Toasty.normal(LoginActivity.this,"Error.").show();
 
                             // ...
                         }

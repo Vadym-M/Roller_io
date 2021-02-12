@@ -106,7 +106,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/favorite"
-                        android:backgroundTint="@color/mainColor" />
+                        android:backgroundTint="@color/like" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/productBuyPage"

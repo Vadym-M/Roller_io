@@ -23,27 +23,34 @@ private MenuItem itemFavorite, itemHome, itemProfile;
         itemFavorite = menu.findItem(R.id.itemFavorite);
         itemHome = menu.findItem(R.id.itemHome);
         itemHome.setEnabled(false);
+        itemHome.setIcon(getResources().getDrawable(R.drawable.home_active, null));
         itemProfile = menu.findItem(R.id.itemProfile);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
                 itemFavorite.setEnabled(true);
+                itemFavorite.setIcon(getResources().getDrawable(R.drawable.favorite, null));
                 itemHome.setEnabled(true);
+                itemHome.setIcon(getResources().getDrawable(R.drawable.home, null));
                 itemProfile.setEnabled(true);
+                itemProfile.setIcon(getResources().getDrawable(R.drawable.profile, null));
                 switch(item.getItemId())
                 {
 
                     case R.id.itemFavorite:
                         fragment = new FavoriteFragment();
+                        itemFavorite.setIcon(getResources().getDrawable(R.drawable.favorite_active, null));
                          itemFavorite.setEnabled(false);
                         break;
                     case R.id.itemHome:
                         fragment = new ProductFragment();
+                        itemHome.setIcon(getResources().getDrawable(R.drawable.home_active, null));
                         itemHome.setEnabled(false);
                         break;
                     case R.id.itemProfile:
                         fragment = new ProfilFragment();
+                        itemProfile.setIcon(getResources().getDrawable(R.drawable.profile_active, null));
                         itemProfile.setEnabled(false);
                         break;
                 }

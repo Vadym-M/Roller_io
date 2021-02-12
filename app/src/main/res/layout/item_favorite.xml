@@ -52,6 +52,9 @@
                     android:layout_alignParentBottom="true"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    app:strokeColor="@color/btnColorRecoleta"
+                    android:textColor="@color/priceColorRecoleta"
+                    android:backgroundTint="@color/white"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:text="Details" />
 
@@ -63,7 +66,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/favorite_active"
-                    android:backgroundTint="@color/mainColor" />
+                    android:backgroundTint="@color/like" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
