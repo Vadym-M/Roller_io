@@ -46,5 +46,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.factor:bouncy:1.8'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.github.woxingxiao:BounceScrollView:1.5'
 
 }

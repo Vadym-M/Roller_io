@@ -146,7 +146,7 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -213,7 +213,7 @@ public class ProductFragment extends Fragment implements SectionAdapter.OnSectio
                 }
 
                 for(DataSnapshot s: snapshot.child(USERS).getChildren()){
-                    if(s.getKey().equals(currentUser.getUid()))
+                    if(s.getKey().equals(currentUser.getUid()) && s.getValue(User.class).getFavorites() != null)
                     {
                         HashMap<String, String> fav;
                         fav = s.getValue(User.class).getFavorites();

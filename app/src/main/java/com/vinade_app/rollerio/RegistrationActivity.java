@@ -122,7 +122,6 @@ public class RegistrationActivity extends AppCompatActivity {
                         userData.put("email", email);
                         userData.put("mobile_number", phone);
                         userData.put("password", password);
-                        userData.put("favorites", "0");
 
                         refDB.child(user.getUid()).updateChildren(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

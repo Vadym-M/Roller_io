@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 public class NavigationBarActivity extends AppCompatActivity {
 private BottomNavigationView bottomNavigationView;
@@ -49,7 +48,7 @@ private MenuItem itemFavorite, itemHome, itemProfile;
                         itemHome.setEnabled(false);
                         break;
                     case R.id.itemProfile:
-                        fragment = new ProfilFragment();
+                        fragment = new ProfileFragment();
                         itemProfile.setIcon(getResources().getDrawable(R.drawable.profile_active, null));
                         itemProfile.setEnabled(false);
                         break;

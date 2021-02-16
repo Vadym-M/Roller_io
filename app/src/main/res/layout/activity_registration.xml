@@ -33,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:textColor="@color/black"
                 android:inputType="textPersonName"
                 android:textCursorDrawable="@drawable/cursor_style" />
 
@@ -57,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:textColor="@color/black"
                 android:inputType="textPersonName"
                 android:textCursorDrawable="@drawable/cursor_style" />
 
@@ -81,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:textColor="@color/black"
                 android:inputType="textEmailAddress"
                 android:textCursorDrawable="@drawable/cursor_style" />
 
@@ -107,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:textCursorDrawable="@drawable/cursor_style" />
 
@@ -130,6 +134,7 @@
                 android:id="@+id/fieldPasswordReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:singleLine="true"
                 android:textCursorDrawable="@drawable/cursor_style" />
 

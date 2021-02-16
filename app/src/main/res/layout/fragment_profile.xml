@@ -5,19 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProfilFragment">
+    tools:context=".ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/imageView"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/priceColorRecoleta"
-        android:src="@drawable/profil_img" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/exitProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="50dp"
+            android:padding="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/style_for_favorites"
+            android:text="Profile"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView6"
+        android:paddingTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -40,6 +50,7 @@
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="20dp"
         android:gravity="center"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
@@ -48,6 +59,7 @@
 
     <TextView
         android:id="@+id/textView9"
+        android:paddingTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -76,7 +88,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="textEmailAddress"
-                android:text="vadimm204@gmail.com"
+                android:text="yourmail@gmail.com"
                 android:textColor="@color/priceColorRecoleta"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
@@ -147,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
@@ -199,7 +211,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
@@ -235,7 +247,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="numberSigned"
-                android:text="535679132"
+                android:text="535672142"
                 android:textColor="@color/priceColorRecoleta"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -245,7 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"

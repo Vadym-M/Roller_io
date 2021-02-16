@@ -2,9 +2,11 @@ package com.vinade_app.rollerio;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -242,6 +245,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         View view;
         CardView cardView;
         RelativeLayout relativeLayout;
+        LinearLayout backgroundTextItem;
 
 
         public ViewHolder2(@NonNull View itemView) {
@@ -253,6 +257,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             textView2 = itemView.findViewById(R.id.productPrice);
             button = itemView.findViewById(R.id.productDetails);
             button2 = itemView.findViewById(R.id.productFavorite);
+            backgroundTextItem = itemView.findViewById(R.id.backgroundItemSeeAlso);
             mAuth = FirebaseAuth.getInstance();
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLay);
             currentUser = mAuth.getCurrentUser();
@@ -262,13 +267,24 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
             if(isRecommendations)
             {
+                LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams paramsLl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                paramsText.weight = 1.0f;
+                paramsText.gravity = Gravity.CENTER_HORIZONTAL;
+
                 Collections.shuffle(products);
                 cardView = itemView.findViewById(R.id.card);
                 imageView.getLayoutParams().height= 250;
                 cardView.getLayoutParams().height = 500;
                 cardView.getLayoutParams().width = 500;
-                textView.setTextSize(10);
-                textView2.setTextSize(10);
+                cardView.setBackground(context.getResources().getDrawable(R.drawable.style_for_recycler_see_also, null));
+                textView.setTextSize(15);
+                textView.setLayoutParams(paramsText);
+                textView2.setTextSize(17);
+                textView2.setPadding(0,20,0,0);
+                textView2.setLayoutParams(paramsText);
+                backgroundTextItem.setBackgroundColor(Color.parseColor("#F1F3F6"));
+                backgroundTextItem.setLayoutParams(paramsLl);
                 button.setVisibility(View.GONE);
                 button2.setVisibility(View.GONE);
                 relativeLayout.setVisibility(View.GONE);

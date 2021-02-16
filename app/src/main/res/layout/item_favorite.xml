@@ -31,12 +31,19 @@
                 android:id="@+id/productNameFavorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textAlignment="viewStart"
+
+                android:textColor="@color/textColorRecoleta"
                 android:text="Name" />
 
             <TextView
                 android:id="@+id/productPriceFavorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="@color/priceColorRecoleta"
                 android:text="Price"
                 />
 
